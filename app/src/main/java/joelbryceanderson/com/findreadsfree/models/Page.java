@@ -5,7 +5,7 @@ package joelbryceanderson.com.findreadsfree.models;
  */
 
 public class Page {
-    
+
     private String titleText;
     private String mainText;
     private String redirectionUrl;
