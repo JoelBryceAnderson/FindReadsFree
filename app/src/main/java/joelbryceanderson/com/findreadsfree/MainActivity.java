@@ -91,13 +91,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showData(List<Page> pages) {
         if (pages != null) {
-            showViews();
-
             mFree = pages.get(0);
             mDiscounted = pages.get(1);
             mAudioBook = pages.get(2);
 
             showPage(mFree, getString(R.string.section_title_free));
+
         }
     }
 
@@ -125,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             mDescription.setText(page.getMainText());
             mReferralLink = page.getRedirectionUrl();
             mPageTitle.setText(title);
+            
+            showViews();
         }
     }
 }
