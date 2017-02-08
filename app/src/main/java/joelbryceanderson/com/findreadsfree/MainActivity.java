@@ -6,12 +6,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import joelbryceanderson.com.findreadsfree.services.BackendService;
 import joelbryceanderson.com.findreadsfree.services.ServiceFactory;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static String TAG = MainActivity.class.toString();
 
     BackendService mBackendService;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(pagesList -> {
                     Log.e("Hey!", pagesList.get(0).getMainText());
+                }, throwable -> {
+                    Log.e(TAG, throwable.getLocalizedMessage());
                 });
     }
 }
