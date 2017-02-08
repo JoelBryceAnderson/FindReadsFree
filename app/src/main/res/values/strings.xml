@@ -6,7 +6,7 @@
 
     <string name="section_title_free">Today\'s\nFree E-Book</string>
     <string name="section_title_discounted">Today\'s\nDiscounted E-Book</string>
-    <string name="section_title_audiobook">Today\'s\Featured Audiobook</string>
+    <string name="section_title_audiobook">Today\'s\nFeatured Audiobook</string>
     <string name="purchase">Purchase</string>
     <string name="description">Book Description</string>
 </resources>
