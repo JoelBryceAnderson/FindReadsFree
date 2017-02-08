@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView mBottomNav;
 
+    ProgressBar mProgressBar;
+
+    LinearLayout mContainer;
+
     String mReferralLink;
 
     @Override
@@ -46,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mContainer = (LinearLayout) findViewById(R.id.main_container);
 
         loadPages();
     }
@@ -81,11 +90,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showData(List<Page> pages) {
-        mFree = pages.get(0);
-        mDiscounted = pages.get(1);
-        mAudioBook = pages.get(2);
+        if (pages != null) {
+            showViews();
 
-        showPage(mFree, getString(R.string.section_title_free));
+            mFree = pages.get(0);
+            mDiscounted = pages.get(1);
+            mAudioBook = pages.get(2);
+
+            showPage(mFree, getString(R.string.section_title_free));
+        }
     }
 
     public void openReferralLink(View v) {
@@ -93,6 +106,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mReferralLink));
             startActivity(intent);
         }
+    }
+
+    private void hideViews() {
+        mContainer.setVisibility(View.GONE);
+        mBottomNav.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void showViews() {
+        mContainer.setVisibility(View.VISIBLE);
+        mBottomNav.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private void showPage(Page page, String title) {
