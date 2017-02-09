@@ -81,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
             return textView;
         });
 
-        Animation in = AnimationUtils.loadAnimation(this,
-                android.R.anim.fade_in);
-        Animation out = AnimationUtils.loadAnimation(this,
-                android.R.anim.fade_out);
+        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
+        Animation out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
 
         mDescription.setInAnimation(in);
         mDescription.setOutAnimation(out);
