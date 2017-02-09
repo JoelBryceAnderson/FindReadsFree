@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context="joelbryceanderson.com.findreadsfree.MainActivity">
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,114 +16,100 @@
         android:background="@color/gray">
 
         <LinearLayout
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true">
+            android:visibility="gone"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/main_container"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="8dp">
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="0dp"
-                    app:cardElevation="8dp">
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:weightSum="3">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextSwitcher
+                        android:id="@+id/page_title"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_vertical"
-                        android:padding="@dimen/activity_horizontal_margin"
-                        android:weightSum="3">
+                        android:layout_weight="2"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="20sp" />
 
-                        <TextSwitcher
-                            android:id="@+id/page_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"
-                            android:textSize="20sp" />
+                    <android.support.v7.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:text="@string/purchase"
+                        android:textColor="@color/colorPrimary"
+                        android:onClick="openPurchaseLink"
+                        app:backgroundTint="@color/white" />
 
-                        <android.support.v7.widget.AppCompatButton
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_gravity="bottom"
-                            android:text="@string/purchase"
-                            android:textColor="@color/colorPrimary"
-                            android:onClick="openPurchaseLink"
-                            app:backgroundTint="@color/white" />
+                </LinearLayout>
 
-                    </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-                </android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/book_cover"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_gravity="center"
+                android:contentDescription="@string/book_cover"
+                android:scaleType="fitCenter" />
 
-                <ImageView
-                    android:id="@+id/book_cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/book_cover"
-                    android:scaleType="fitCenter" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@color/colorPrimary"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/description_scroller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:layout_marginBottom="56dp">
+
+                <TextSwitcher
+                    android:id="@+id/book_description"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:background="@color/colorPrimary"/>
-
-                <android.support.v4.widget.NestedScrollView
-                    android:id="@+id/description_scroller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
-                    android:layout_marginBottom="56dp">
+                    android:padding="8dp"
+                    android:scrollbarStyle="outsideInset" />
 
-                    <TextSwitcher
-                        android:id="@+id/book_description"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="vertical"
-                        android:padding="8dp"
-                        android:scrollbarStyle="outsideInset" />
-
-                </android.support.v4.widget.NestedScrollView>
-
-            </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
         </LinearLayout>
 
-        <android.support.v7.widget.CardView
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="8dp"
-            android:layout_alignParentBottom="true">
+            android:background="@color/white"
+            app:elevation="8dp"
+            app:layout_anchor="@id/main_container"
+            app:layout_anchorGravity="bottom"
+            app:itemIconTint="@drawable/menu_color_selector"
+            app:itemTextColor="@drawable/menu_color_selector"
+            app:menu="@menu/bottom_navigation_main" />
 
-            <android.support.design.widget.BottomNavigationView
-                android:id="@+id/bottom_navigation"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:itemIconTint="@drawable/menu_color_selector"
-                app:itemTextColor="@drawable/menu_color_selector"
-                app:menu="@menu/bottom_navigation_main" />
-
-        </android.support.v7.widget.CardView>
-        
-    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>
