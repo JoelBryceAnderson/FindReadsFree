@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextSwitcher mDescription;
     TextSwitcher mPageTitle;
-
     BottomNavigationView mBottomNav;
-
     ProgressBar mProgressBar;
     ImageView mBookCover;
     LinearLayout mContainer;
@@ -57,15 +55,13 @@ public class MainActivity extends AppCompatActivity {
 
         mPageTitle = (TextSwitcher) findViewById(R.id.page_title);
         mDescription = (TextSwitcher) findViewById(R.id.book_description);
-        //mDescription.setMovementMethod(new ScrollingMovementMethod());
-
         mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
-
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
         mScrollView = (ScrollView) findViewById(R.id.description_scroller);
+
+        mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
 
         initTextSwitchers();
         loadPages();
@@ -156,9 +152,10 @@ public class MainActivity extends AppCompatActivity {
     private void showPage(Page page, String title) {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
-            mDescription.setText(page.getMainText());
+            mDescription.setText(page.getMainText().replace(getString(R.string.alexa_string), "")); //check for "alexa string" in description, remove it if it exists
             mReferralLink = page.getRedirectionUrl();
             mPageTitle.setText(title);
+            //TODO replace with variable cover link
             loadCover("http://harrypotteraudiobooks.org/wp-content/uploads/2015/10/harry-potter-and-the-goblet-of-fire-free-audiobook-download.jpg");
 
             showViews();

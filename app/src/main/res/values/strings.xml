@@ -9,4 +9,6 @@
     <string name="section_title_audiobook">Today\'s\nFeatured Audiobook</string>
     <string name="purchase">Purchase</string>
     <string name="description">Book Description</string>
+
+    <string name="alexa_string"> For links to the suggested books, open your alexa app. </string>
 </resources>
