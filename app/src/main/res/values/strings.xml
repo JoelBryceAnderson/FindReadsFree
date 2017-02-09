@@ -5,10 +5,6 @@
     <string name="title_promotion">Bargain</string>
     <string name="title_audiobook">Audiobook</string>
 
-    <string name="section_title_free">Today\'s\nFree E-Book</string>
-    <string name="section_title_discounted">Today\'s\nDiscounted E-Book</string>
-    <string name="section_title_audiobook">Today\'s\nFeatured Audiobook</string>
-
     <string name="purchase">Purchase</string>
     <string name="book_description">Book Description</string>
     <string name="book_cover">Book Cover</string>
