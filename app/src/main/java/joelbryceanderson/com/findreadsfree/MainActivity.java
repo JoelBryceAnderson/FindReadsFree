@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
     ImageView mBookCover;
     LinearLayout mContainer;
-    ScrollView mScrollView;
+    NestedScrollView mScrollView;
     SwipeRefreshLayout mSwipeRefresh;
 
     String mPurchaseLink;
@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
-        mScrollView = (ScrollView) findViewById(R.id.description_scroller);
+        mScrollView = (NestedScrollView) findViewById(R.id.description_scroller);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
-        mSwipeRefresh.setOnRefreshListener(onRefresh());
+        mSwipeRefresh.setOnRefreshListener(this::loadPages);
 
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         if (pages != null && pages.size() >= 3) {
             mPages = pages;
             showPage(mPages.get(selectedPage));
+            showViews();
         }
     }
 
@@ -141,14 +142,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void hideViews() {
-        mSwipeRefresh.setRefreshing(false);
-        mContainer.setVisibility(View.GONE);
-        mBottomNav.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
-
     private void showViews() {
+        mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
@@ -161,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
             mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(page.getTitleText());
             loadCover(page.getImageUrl());
-
-            showViews();
         }
     }
 
@@ -175,14 +168,8 @@ public class MainActivity extends AppCompatActivity {
                 .into(mBookCover);
     }
 
-    private SwipeRefreshLayout.OnRefreshListener onRefresh() {
-        return () -> {
-            hideViews();
-            loadPages();
-        };
-    }
-
     private void showErrorSnackbar() {
+        mSwipeRefresh.setRefreshing(false);
         Snackbar.make(mContainer, R.string.error_text, Snackbar.LENGTH_LONG).show();
     }
 }
