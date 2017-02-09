@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showData, throwable -> {
                     Log.e(TAG, throwable.getLocalizedMessage());
-                    showErrorSnackbar();
+                    showErrorToast();
                 });
     }
 
@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
                 .into(mBookCover);
     }
 
-    private void showErrorSnackbar() {
+    private void showErrorToast() {
         mSwipeRefresh.setRefreshing(false);
-        Snackbar.make(mContainer, R.string.error_text, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, R.string.error_text, Toast.LENGTH_LONG).show();
     }
 }
