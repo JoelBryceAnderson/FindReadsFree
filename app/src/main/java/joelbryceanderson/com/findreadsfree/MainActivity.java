@@ -16,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     TextSwitcher mDescription;
     TextSwitcher mPageTitle;
     BottomNavigationView mBottomNav;
-    ProgressBar mProgressBar;
     ImageView mBookCover;
     LinearLayout mContainer;
     NestedScrollView mScrollView;
@@ -59,28 +57,31 @@ public class MainActivity extends AppCompatActivity {
         mPageTitle = (TextSwitcher) findViewById(R.id.page_title);
         mDescription = (TextSwitcher) findViewById(R.id.book_description);
         mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
         mScrollView = (NestedScrollView) findViewById(R.id.description_scroller);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
-        mSwipeRefresh.setOnRefreshListener(this::loadPages);
 
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
 
-
+        initSwipeRefresh();
         initTextSwitchers();
         loadPages();
+    }
+
+    private void initSwipeRefresh() {
+        mSwipeRefresh.setOnRefreshListener(this::loadPages);
+        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeRefresh.setRefreshing(true);
     }
 
     private void initTextSwitchers() {
         mDescription.setFactory(() -> new TextView(this));
         mPageTitle.setFactory(() -> {
             TextView textView = new TextView(MainActivity.this);
-            textView.setTextAppearance(MainActivity.this, android.R.style.TextAppearance);
             textView.setTextSize(20);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setTextColor(Color.WHITE);
@@ -146,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
     }
 
     private void showPage(Page page) {
