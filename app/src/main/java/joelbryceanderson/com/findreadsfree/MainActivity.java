@@ -1,16 +1,21 @@
 package joelbryceanderson.com.findreadsfree;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -33,14 +38,15 @@ public class MainActivity extends AppCompatActivity {
     Page mDiscounted;
     Page mAudioBook;
 
-    TextView mDescription;
-    TextView mPageTitle;
+    TextSwitcher mDescription;
+    TextSwitcher mPageTitle;
 
     BottomNavigationView mBottomNav;
 
     ProgressBar mProgressBar;
     ImageView mBookCover;
     LinearLayout mContainer;
+    ScrollView mScrollView;
 
     String mReferralLink;
 
@@ -49,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPageTitle = (TextView) findViewById(R.id.page_title);
-        mDescription = (TextView) findViewById(R.id.book_description);
-        mDescription.setMovementMethod(new ScrollingMovementMethod());
+        mPageTitle = (TextSwitcher) findViewById(R.id.page_title);
+        mDescription = (TextSwitcher) findViewById(R.id.book_description);
+        //mDescription.setMovementMethod(new ScrollingMovementMethod());
 
         mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
@@ -59,8 +65,32 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
+        mScrollView = (ScrollView) findViewById(R.id.description_scroller);
 
+        initTextSwitchers();
         loadPages();
+    }
+
+    private void initTextSwitchers() {
+        mDescription.setFactory(() -> new TextView(this));
+        mPageTitle.setFactory(() -> {
+            TextView textView = new TextView(MainActivity.this);
+            textView.setTextAppearance(MainActivity.this, android.R.style.TextAppearance);
+            textView.setTextSize(20);
+            textView.setTypeface(null, Typeface.BOLD);
+            textView.setTextColor(Color.WHITE);
+            return textView;
+        });
+
+        Animation in = AnimationUtils.loadAnimation(this,
+                android.R.anim.fade_in);
+        Animation out = AnimationUtils.loadAnimation(this,
+                android.R.anim.fade_out);
+
+        mDescription.setInAnimation(in);
+        mDescription.setOutAnimation(out);
+        mPageTitle.setInAnimation(in);
+        mPageTitle.setOutAnimation(out);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomNavSelected() {
@@ -125,16 +155,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPage(Page page, String title) {
         if (page != null) {
+            mScrollView.smoothScrollTo(0,0);
             mDescription.setText(page.getMainText());
             mReferralLink = page.getRedirectionUrl();
             mPageTitle.setText(title);
-            Glide.with(MainActivity.this)
-                    .load("http://harrypotteraudiobooks.org/wp-content/uploads/2015/10/harry-potter-and-the-goblet-of-fire-free-audiobook-download.jpg")
-                    .crossFade()
-                    .fitCenter()
-                    .into(mBookCover);
-            
+            loadCover("http://harrypotteraudiobooks.org/wp-content/uploads/2015/10/harry-potter-and-the-goblet-of-fire-free-audiobook-download.jpg");
+
             showViews();
         }
+    }
+
+    private void loadCover(String url) {
+        Glide.with(MainActivity.this)
+                .load(url)
+                .crossFade()
+                .fitCenter()
+                .into(mBookCover);
     }
 }
