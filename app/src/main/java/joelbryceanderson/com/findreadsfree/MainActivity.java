@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     BackendService mBackendService;
 
-    Page mFree;
-    Page mDiscounted;
-    Page mAudioBook;
+    List<Page> mPages;
 
     TextSwitcher mDescription;
     TextSwitcher mPageTitle;
@@ -98,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
         return item -> {
             switch (item.getItemId()) {
                 case R.id.action_free:
-                    showPage(mFree, getString(R.string.section_title_free));
+                    showPage(mPages.get(0), getString(R.string.section_title_free));
                     break;
                 case R.id.action_promotion:
-                    showPage(mDiscounted, getString(R.string.section_title_discounted));
+                    showPage(mPages.get(1), getString(R.string.section_title_discounted));
                     break;
                 case R.id.action_audio_book:
-                    showPage(mAudioBook, getString(R.string.section_title_audiobook));
+                    showPage(mPages.get(2), getString(R.string.section_title_audiobook));
                     break;
             }
 
@@ -127,12 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showData(List<Page> pages) {
         if (pages != null && pages.size() >= 3) {
-            mFree = pages.get(0);
-            mDiscounted = pages.get(1);
-            mAudioBook = pages.get(2);
-
-            showPage(mFree, getString(R.string.section_title_free));
-
+            showPage(mPages.get(0), getString(R.string.section_title_free));
         }
     }
 
