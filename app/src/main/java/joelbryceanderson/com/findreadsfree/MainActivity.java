@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mBookCover;
     LinearLayout mContainer;
     ScrollView mScrollView;
+    SwipeRefreshLayout mSwipeRefresh;
 
     String mPurchaseLink;
 
@@ -60,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
         mScrollView = (ScrollView) findViewById(R.id.description_scroller);
+        mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
+        mSwipeRefresh.setOnRefreshListener(onRefresh());
 
         initTextSwitchers();
         loadPages();
@@ -116,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showData, throwable -> {
                     Log.e(TAG, throwable.getLocalizedMessage());
+                    showErrorSnackbar();
                 });
     }
 
@@ -144,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showViews() {
+        mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
@@ -164,9 +171,21 @@ public class MainActivity extends AppCompatActivity {
     private void loadCover(String url) {
         Glide.with(MainActivity.this)
                 .load(url)
-                .crossFade(500)
+                .crossFade()
                 .override(1000,1000)
                 .fitCenter()
                 .into(mBookCover);
+    }
+
+    private SwipeRefreshLayout.OnRefreshListener onRefresh() {
+        return () -> {
+            hideViews();
+            loadPages();
+        };
+    }
+
+    private void showErrorSnackbar() {
+        mSwipeRefresh.setRefreshing(false);
+        Snackbar.make(mContainer, R.string.error_text, Snackbar.LENGTH_LONG).show();
     }
 }
