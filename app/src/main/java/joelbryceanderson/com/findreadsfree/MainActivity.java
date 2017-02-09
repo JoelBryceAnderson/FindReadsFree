@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
         mSwipeRefresh.setOnRefreshListener(onRefresh());
 
+        mBackendService = ServiceFactory.createRetrofitService(
+                BackendService.class, BackendService.SERVICE_ENDPOINT);
+
+
         initTextSwitchers();
         loadPages();
     }
@@ -114,9 +118,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadPages() {
-        mBackendService = ServiceFactory.createRetrofitService(
-                BackendService.class, BackendService.SERVICE_ENDPOINT);
-
         mBackendService.getPages()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -141,13 +142,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideViews() {
+        mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.GONE);
         mBottomNav.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
     private void showViews() {
-        mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
@@ -182,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showErrorSnackbar() {
-        mSwipeRefresh.setRefreshing(false);
         Snackbar.make(mContainer, R.string.error_text, Snackbar.LENGTH_LONG).show();
     }
 }
