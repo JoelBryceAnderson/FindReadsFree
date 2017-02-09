@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView mBottomNav;
 
     ProgressBar mProgressBar;
-
+    ImageView mBookCover;
     LinearLayout mContainer;
 
     String mReferralLink;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mBookCover = (ImageView) findViewById(R.id.book_cover);
         mContainer = (LinearLayout) findViewById(R.id.main_container);
 
         loadPages();
@@ -124,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
             mDescription.setText(page.getMainText());
             mReferralLink = page.getRedirectionUrl();
             mPageTitle.setText(title);
+            Glide.with(MainActivity.this)
+                    .load("http://harrypotteraudiobooks.org/wp-content/uploads/2015/10/harry-potter-and-the-goblet-of-fire-free-audiobook-download.jpg")
+                    .crossFade()
+                    .fitCenter()
+                    .into(mBookCover);
             
             showViews();
         }
