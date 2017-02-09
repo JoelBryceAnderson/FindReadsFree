@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mContainer;
     ScrollView mScrollView;
 
-    String mReferralLink;
+    String mPurchaseLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showData(List<Page> pages) {
-        if (pages != null) {
+        if (pages != null && pages.size() >= 3) {
             mFree = pages.get(0);
             mDiscounted = pages.get(1);
             mAudioBook = pages.get(2);
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openReferralLink(View v) {
-        if (mReferralLink != null) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mReferralLink));
+    public void openPurchaseLink(View v) {
+        if (mPurchaseLink != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
             startActivity(intent);
         }
     }
@@ -153,10 +153,9 @@ public class MainActivity extends AppCompatActivity {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
             mDescription.setText(page.getMainText().replace(getString(R.string.alexa_string), "")); //check for "alexa string" in description, remove it if it exists
-            mReferralLink = page.getRedirectionUrl();
+            mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(title);
-            //TODO replace with variable cover link
-            loadCover("http://harrypotteraudiobooks.org/wp-content/uploads/2015/10/harry-potter-and-the-goblet-of-fire-free-audiobook-download.jpg");
+            loadCover(page.getImageUrl());
 
             showViews();
         }
@@ -165,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
     private void loadCover(String url) {
         Glide.with(MainActivity.this)
                 .load(url)
-                .crossFade()
+                .crossFade(500)
+                .override(1000,1000)
                 .fitCenter()
                 .into(mBookCover);
     }

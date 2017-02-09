@@ -9,6 +9,8 @@ public class Page {
     private String titleText;
     private String mainText;
     private String redirectionUrl;
+    private String purchaseUrl;
+    private String imageUrl;
 
     public String getTitleText() {
         return titleText;
@@ -20,5 +22,13 @@ public class Page {
 
     public String getRedirectionUrl() {
         return redirectionUrl;
+    }
+
+    public String getPurchaseUrl() {
+        return purchaseUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

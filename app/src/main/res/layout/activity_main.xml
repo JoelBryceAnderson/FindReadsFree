@@ -53,7 +53,7 @@
                         android:layout_gravity="bottom"
                         android:text="@string/purchase"
                         android:textColor="@color/colorPrimary"
-                        android:onClick="openReferralLink"
+                        android:onClick="openPurchaseLink"
                         app:backgroundTint="@color/white" />
 
                 </LinearLayout>
