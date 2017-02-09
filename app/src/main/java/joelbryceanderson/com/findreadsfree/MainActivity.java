@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<Page> mPages;
 
+    int selectedPage = 0;
+
     TextSwitcher mDescription;
     TextSwitcher mPageTitle;
     BottomNavigationView mBottomNav;
@@ -94,13 +96,16 @@ public class MainActivity extends AppCompatActivity {
         return item -> {
             switch (item.getItemId()) {
                 case R.id.action_free:
-                    showPage(mPages.get(0), getString(R.string.section_title_free));
+                    showPage(mPages.get(0));
+                    selectedPage = 0;
                     break;
                 case R.id.action_promotion:
-                    showPage(mPages.get(1), getString(R.string.section_title_discounted));
+                    showPage(mPages.get(1));
+                    selectedPage = 1;
                     break;
                 case R.id.action_audio_book:
-                    showPage(mPages.get(2), getString(R.string.section_title_audiobook));
+                    showPage(mPages.get(2));
+                    selectedPage = 2;
                     break;
             }
 
@@ -123,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showData(List<Page> pages) {
         if (pages != null && pages.size() >= 3) {
-            showPage(mPages.get(0), getString(R.string.section_title_free));
+            mPages = pages;
+            showPage(mPages.get(selectedPage));
         }
     }
 
@@ -147,12 +153,12 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void showPage(Page page, String title) {
+    private void showPage(Page page) {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
             mDescription.setText(page.getMainText().replace(getString(R.string.alexa_string), "")); //check for "alexa string" in description, remove it if it exists
             mPurchaseLink = page.getPurchaseUrl();
-            mPageTitle.setText(title);
+            mPageTitle.setText(page.getTitleText());
             loadCover(page.getImageUrl());
 
             showViews();
