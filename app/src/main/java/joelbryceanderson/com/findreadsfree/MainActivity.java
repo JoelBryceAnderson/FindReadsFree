@@ -75,12 +75,18 @@ public class MainActivity extends AppCompatActivity {
         loadPages();
     }
 
+    /**
+     * Initialize reload on swipe down, colors for swipe view
+     */
     private void initSwipeRefresh() {
         mSwipeRefresh.setOnRefreshListener(this::loadPages);
         mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         mSwipeRefresh.setRefreshing(true);
     }
 
+    /**
+     * Initialize animations for text views
+     */
     private void initTextSwitchers() {
         mDescription.setFactory(() -> new TextView(this));
         mPageTitle.setFactory(() -> {
@@ -100,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
         mPageTitle.setOutAnimation(out);
     }
 
+    /**
+     * Handle choosing of bottom nav menu items
+     *
+     * @return always true to select item
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomNavSelected() {
         return item -> {
             switch (item.getItemId()) {
@@ -116,11 +127,15 @@ public class MainActivity extends AppCompatActivity {
                     selectPage(3);
                     break;
             }
-
             return true;
         };
     }
 
+    /**
+     * Switches views to display data from selected page
+     *
+     * @param page the index of the page to select
+     */
     private void selectPage(int page) {
         if (mPages.get(page) != null) {
             selectedPage = page;
@@ -128,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches data from the backend, displays on completion
+     */
     private void loadPages() {
         mBackendService.getPages()
                 .subscribeOn(Schedulers.newThread())
@@ -138,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Displays data once load has finished
+     *
+     * @param pages list of all pages to display
+     */
     private void showData(List<Page> pages) {
         if (pages != null && pages.size() >= 3) {
             mPages = pages;
@@ -146,6 +169,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Open currently selected link in device's browser
+     *
+     * @param v view parameter to pass as onClick listener
+     */
     public void openPurchaseLink(View v) {
         if (mPurchaseLink != null) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
@@ -153,12 +181,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Stop refreshing, show main container and nav bar
+     */
     private void showViews() {
         mSwipeRefresh.setRefreshing(false);
         mContainer.setVisibility(View.VISIBLE);
         mBottomNav.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Fills the views with data from the selected page
+     *
+     * @param page page to display in views
+     */
     private void showPage(Page page) {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
@@ -170,6 +206,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Changes the currently displayed text on header button to correspond with tab
+     */
     private void setButtonText() {
         if (selectedPage == 3) {
             mButton.setText(getString(R.string.read_more));
@@ -178,6 +217,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Uses glide to load book cover from url into image view
+     *
+     * @param url from which to load cover image
+     */
     private void loadCover(String url) {
         Glide.with(MainActivity.this)
                 .load(url)
@@ -187,6 +231,9 @@ public class MainActivity extends AppCompatActivity {
                 .into(mBookCover);
     }
 
+    /**
+     * Stops refreshing and displays error message to user.
+     */
     private void showErrorToast() {
         mSwipeRefresh.setRefreshing(false);
         Toast.makeText(MainActivity.this, R.string.error_text, Toast.LENGTH_LONG).show();
