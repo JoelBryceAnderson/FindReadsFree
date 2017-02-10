@@ -15,6 +15,6 @@ public interface BackendService {
 
     String SERVICE_ENDPOINT = "http://s3.amazonaws.com/";
 
-    @GET("feed1/t5.json")
+    @GET("feed1/t6.json")
     Observable<List<Page>> getPages();
 }
