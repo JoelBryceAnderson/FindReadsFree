@@ -92,7 +92,8 @@
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical"
                     android:padding="8dp"
-                    android:scrollbarStyle="outsideInset" />
+                    android:scrollbarStyle="outsideInset"
+                    android:measureAllChildren="false" />
 
             </android.support.v4.widget.NestedScrollView>
 
