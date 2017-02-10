@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showPage(Page page) {
         if (page != null) {
-            mScrollView.smoothScrollTo(0,0);
             mDescription.setText(page.getMainText());
+            mScrollView.smoothScrollTo(0,0);
             mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(page.getAppName());
             setButtonText();
