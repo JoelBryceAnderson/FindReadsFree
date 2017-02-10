@@ -101,21 +101,28 @@ public class MainActivity extends AppCompatActivity {
         return item -> {
             switch (item.getItemId()) {
                 case R.id.action_free:
-                    showPage(mPages.get(0));
-                    selectedPage = 0;
+                    selectPage(0);
                     break;
                 case R.id.action_promotion:
-                    showPage(mPages.get(1));
-                    selectedPage = 1;
+                    selectPage(1);
                     break;
                 case R.id.action_audio_book:
-                    showPage(mPages.get(2));
-                    selectedPage = 2;
+                    selectPage(2);
+                    break;
+                case R.id.action_serial:
+                    selectPage(3);
                     break;
             }
 
             return true;
         };
+    }
+
+    private void selectPage(int page) {
+        if (mPages.get(page) != null) {
+            showPage(mPages.get(page));
+            selectedPage = page;
+        }
     }
 
     private void loadPages() {
@@ -152,11 +159,15 @@ public class MainActivity extends AppCompatActivity {
     private void showPage(Page page) {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
-            mDescription.setText(page.getMainText().replace(getString(R.string.alexa_string), "")); //check for "alexa string" in description, remove it if it exists
+            mDescription.setText(formatDescription(page));
             mPurchaseLink = page.getPurchaseUrl();
-            mPageTitle.setText(page.getTitleText());
+            mPageTitle.setText(page.getAppName());
             loadCover(page.getImageUrl());
         }
+    }
+
+    private String formatDescription(Page page) {
+        return page.getMainText().replace(getString(R.string.alexa_string), ""); //check for "alexa string" in description, remove it if it exists
     }
 
     private void loadCover(String url) {
