@@ -13,5 +13,4 @@
     <string name="book_cover">Book Cover</string>
 
     <string name="error_text">An error occurred while loading today\'s books. Swipe down to refresh.</string>
-    <string name="alexa_string"> For links to the suggested books, open your alexa app. </string>
 </resources>
