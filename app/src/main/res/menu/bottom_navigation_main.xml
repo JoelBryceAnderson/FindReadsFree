@@ -22,7 +22,7 @@
     <item
         android:id="@+id/action_serial"
         android:enabled="true"
-        android:icon="@drawable/ic_book"
+        android:icon="@drawable/ic_serial"
         android:title="@string/title_serial"
         app:showAsAction="ifRoom" />
 </menu>
