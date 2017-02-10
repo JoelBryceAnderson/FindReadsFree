@@ -9,6 +9,8 @@ import rx.Observable;
 
 /**
  * Created by JAnderson on 2/8/17.
+ *
+ * Retrofit Service to load pages from backend.
  */
 
 public interface BackendService {

@@ -6,6 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by JAnderson on 2/8/17.
+ *
+ * Servie factory to generate backend service for use in activities.
  */
 
 public class ServiceFactory {
