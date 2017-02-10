@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
     private void showPage(Page page) {
         if (page != null) {
             mScrollView.smoothScrollTo(0,0);
-            mDescription.setText(formatDescription(page));
+            mDescription.setText(page.getMainText());
             mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(page.getAppName());
             setButtonText();
@@ -176,10 +176,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mButton.setText(getString(R.string.purchase));
         }
-    }
-
-    private String formatDescription(Page page) {
-        return page.getMainText().replace(getString(R.string.alexa_string), ""); //check for "alexa string" in description, remove it if it exists
     }
 
     private void loadCover(String url) {
