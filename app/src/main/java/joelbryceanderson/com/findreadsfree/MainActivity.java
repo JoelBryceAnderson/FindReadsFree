@@ -1,5 +1,6 @@
 package joelbryceanderson.com.findreadsfree;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
             startActivity(intent);
-        } catch (Exception e) {
+        } catch (ActivityNotFoundException e) {
             Log.e(TAG, e.getLocalizedMessage());
             Toast.makeText(MainActivity.this, R.string.error_text, Toast.LENGTH_LONG).show();
         }
