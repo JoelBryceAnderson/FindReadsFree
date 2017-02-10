@@ -4,6 +4,7 @@
     <string name="title_free">Free</string>
     <string name="title_promotion">Bargain</string>
     <string name="title_audiobook">Audiobook</string>
+    <string name="title_serial">Serial</string>
 
     <string name="purchase">Purchase</string>
     <string name="book_description">Book Description</string>
