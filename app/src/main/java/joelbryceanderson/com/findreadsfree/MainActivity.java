@@ -174,10 +174,19 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v view parameter to pass as onClick listener
      */
-    public void openPurchaseLink(View v) {
+    public void onButtonClicked(View v) {
         if (mPurchaseLink != null) {
+            openPurchaseLink();
+        }
+    }
+
+    private void openPurchaseLink() {
+        try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
             startActivity(intent);
+        } catch (Exception e) {
+            Log.e(TAG, e.getLocalizedMessage());
+            Toast.makeText(MainActivity.this, R.string.error_text, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -198,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     private void showPage(Page page) {
         if (page != null) {
             mDescription.setText(page.getMainText());
-            mScrollView.smoothScrollTo(0,0);
+            mScrollView.scrollTo(0,0);
             mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(page.getAppName());
             setButtonText();

@@ -12,5 +12,6 @@
     <string name="book_description">Book Description</string>
     <string name="book_cover">Book Cover</string>
 
-    <string name="error_text">An error occurred while loading today\'s books. Swipe down to refresh.</string>
+    <string name="error_loading_text">An error occurred while loading today\'s books. Swipe down to refresh.</string>
+    <string name="error_text">An error occurred. Please try again later.</string>
 </resources>
