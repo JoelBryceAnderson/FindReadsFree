@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView mBottomNav;
     ImageView mBookCover;
     LinearLayout mContainer;
+    AppCompatButton mButton;
     NestedScrollView mScrollView;
     SwipeRefreshLayout mSwipeRefresh;
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mContainer = (LinearLayout) findViewById(R.id.main_container);
         mScrollView = (NestedScrollView) findViewById(R.id.description_scroller);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mButton = (AppCompatButton) findViewById(R.id.purchase_button);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
 
@@ -120,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void selectPage(int page) {
         if (mPages.get(page) != null) {
-            showPage(mPages.get(page));
             selectedPage = page;
+            showPage(mPages.get(page));
         }
     }
 
@@ -162,7 +165,16 @@ public class MainActivity extends AppCompatActivity {
             mDescription.setText(formatDescription(page));
             mPurchaseLink = page.getPurchaseUrl();
             mPageTitle.setText(page.getAppName());
+            setButtonText();
             loadCover(page.getImageUrl());
+        }
+    }
+
+    private void setButtonText() {
+        if (selectedPage == 3) {
+            mButton.setText(getString(R.string.read_more));
+        } else {
+            mButton.setText(getString(R.string.purchase));
         }
     }
 
