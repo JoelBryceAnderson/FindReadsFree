@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mButton = (AppCompatButton) findViewById(R.id.purchase_button);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
+        mButton.setOnClickListener(onButtonClicked());
 
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
@@ -171,16 +172,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Open currently selected link in device's browser
-     *
-     * @param v view parameter to pass as onClick listener
+     * Checks if purchase link is null string before attempting to open it in browser
      */
-    public void onButtonClicked(View v) {
-        if (mPurchaseLink != null) {
-            openPurchaseLink();
-        }
+    public View.OnClickListener onButtonClicked() {
+        return view -> {
+            if (mPurchaseLink != null) {
+                openPurchaseLink();
+            }
+        };
     }
 
+    /**
+     * Opens the purchase link in browser.
+     * Exception handling for potential malformed URL from backend.
+     */
     private void openPurchaseLink() {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
