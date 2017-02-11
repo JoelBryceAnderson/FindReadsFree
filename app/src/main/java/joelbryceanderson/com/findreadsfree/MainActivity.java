@@ -246,6 +246,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showErrorToast() {
         mSwipeRefresh.setRefreshing(false);
-        Toast.makeText(MainActivity.this, R.string.error_text, Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, R.string.error_loading_text, Toast.LENGTH_LONG).show();
     }
 }
