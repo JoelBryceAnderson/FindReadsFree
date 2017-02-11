@@ -60,11 +60,23 @@
             <ImageView
                 android:id="@+id/book_cover"
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_gravity="center"
                 android:contentDescription="@string/book_cover"
                 android:scaleType="fitCenter" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/referral_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:text="@string/error_text"
+                app:backgroundTint="@color/colorPrimary" />
 
             <View
                 android:layout_width="match_parent"

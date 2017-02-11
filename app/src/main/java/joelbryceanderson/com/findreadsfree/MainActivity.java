@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView mBottomNav;
     ImageView mBookCover;
     LinearLayout mContainer;
-    AppCompatButton mButton;
+    AppCompatButton mPurchaseButton;
+    AppCompatButton mReferralButton;
     NestedScrollView mScrollView;
     SwipeRefreshLayout mSwipeRefresh;
 
     String mPurchaseLink;
+    String mReferralLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
         mContainer = (LinearLayout) findViewById(R.id.main_container);
         mScrollView = (NestedScrollView) findViewById(R.id.description_scroller);
         mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mButton = (AppCompatButton) findViewById(R.id.purchase_button);
+        mPurchaseButton = (AppCompatButton) findViewById(R.id.purchase_button);
+        mReferralButton = (AppCompatButton) findViewById(R.id.referral_button);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
-        mButton.setOnClickListener(onButtonClicked());
+        mPurchaseButton.setOnClickListener(onButtonClicked(mPurchaseLink));
+        mReferralButton.setOnClickListener(onButtonClicked(mReferralLink));
 
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
@@ -172,23 +176,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if purchase link is null string before attempting to open it in browser
+     * Checks if link is null string before attempting to open it in browser
      */
-    public View.OnClickListener onButtonClicked() {
+    public View.OnClickListener onButtonClicked(String link) {
         return view -> {
-            if (mPurchaseLink != null) {
-                openPurchaseLink();
+            if (link != null) {
+                openLink(link);
             }
         };
     }
 
     /**
-     * Opens the purchase link in browser.
-     * Exception handling for potential malformed URL from backend.
+     * Opens link in browser, safely checking if link is malformed
+     *
+     * @param link to open in browser
      */
-    private void openPurchaseLink() {
+    private void openLink(String link) {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mPurchaseLink));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Log.e(TAG, e.getLocalizedMessage());
@@ -215,8 +220,9 @@ public class MainActivity extends AppCompatActivity {
             mDescription.setText(page.getMainText());
             mScrollView.scrollTo(0,0);
             mPurchaseLink = page.getPurchaseUrl();
+            mReferralLink = page.getRedirectionUrl();
             mPageTitle.setText(page.getAppName());
-            setButtonText();
+            setPurchaseButtonText();
             loadCover(page.getImageUrl());
         }
     }
@@ -224,11 +230,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Changes the currently displayed text on header button to correspond with tab
      */
-    private void setButtonText() {
+    private void setPurchaseButtonText() {
         if (selectedPage == 3) {
-            mButton.setText(getString(R.string.read_more));
+            mPurchaseButton.setText(getString(R.string.read_more));
         } else {
-            mButton.setText(getString(R.string.purchase));
+            mPurchaseButton.setText(getString(R.string.purchase));
         }
     }
 
