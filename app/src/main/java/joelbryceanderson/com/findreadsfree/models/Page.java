@@ -15,6 +15,8 @@ public class Page {
     private String purchaseUrl;
     private String bname;
     private String appName;
+    private String bountytext;
+    private String bountylink;
 
     public String getTitleText() {
         return titleText;
@@ -42,5 +44,13 @@ public class Page {
 
     public String getAppName() {
         return appName;
+    }
+
+    public String getBountylink() {
+        return bountylink;
+    }
+
+    public String getBountytext() {
+        return bountytext;
     }
 }
