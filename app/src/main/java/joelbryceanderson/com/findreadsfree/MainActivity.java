@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         mReferralButton = (AppCompatButton) findViewById(R.id.referral_button);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
-        mPurchaseButton.setOnClickListener(onButtonClicked(mPurchaseLink));
-        mReferralButton.setOnClickListener(onButtonClicked(mReferralLink));
+        mPurchaseButton.setOnClickListener(onPurchaseButtonClicked());
+        mReferralButton.setOnClickListener(onReferralButtonClicked());
 
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
@@ -143,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
      * @param page the index of the page to select
      */
     private void selectPage(int page) {
-        if (mPages.get(page) != null) {
+        if (page == selectedPage) {
+            mScrollView.smoothScrollTo(0,0);
+        } else if (mPages.get(page) != null) {
             selectedPage = page;
             showPage(mPages.get(page));
         }
@@ -179,16 +181,30 @@ public class MainActivity extends AppCompatActivity {
      * On click listener to open links.
      * Checks if link is null before attempting to open.
      *
-     * @param link to open in browser
      * @return On click listener to assign to link button
      */
-    public View.OnClickListener onButtonClicked(String link) {
+    public View.OnClickListener onPurchaseButtonClicked() {
         return view -> {
-            if (link != null) {
-                openLink(link);
+            if (mPurchaseLink != null) {
+                openLink(mPurchaseLink);
             }
         };
     }
+
+    /**
+     * On click listener to open links.
+     * Checks if link is null before attempting to open.
+     *
+     * @return On click listener to assign to link button
+     */
+    public View.OnClickListener onReferralButtonClicked() {
+        return view -> {
+            if (mReferralLink != null) {
+                openLink(mReferralLink);
+            }
+        };
+    }
+
 
     /**
      * Opens link in browser, safely checking if link is malformed
@@ -225,11 +241,21 @@ public class MainActivity extends AppCompatActivity {
             mDescription.setText(page.getMainText());
 
             mPurchaseLink = page.getPurchaseUrl();
-            mReferralLink = page.getRedirectionUrl();
 
             mScrollView.scrollTo(0,0);
             setPurchaseButtonText();
+            updateReferralButton(page);
             loadCover(page.getImageUrl());
+        }
+    }
+
+    private void updateReferralButton(Page page) {
+        if (page.getBountytext() != null && page.getBountylink() != null) {
+            mReferralButton.setVisibility(View.VISIBLE);
+            mReferralButton.setText(page.getBountytext());
+            mReferralLink = page.getBountylink();
+        } else {
+            mReferralButton.setVisibility(View.GONE);
         }
     }
 
