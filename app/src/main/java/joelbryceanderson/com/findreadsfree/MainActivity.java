@@ -217,11 +217,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showPage(Page page) {
         if (page != null) {
+            mPageTitle.setText(page.getAppName());
             mDescription.setText(page.getMainText());
-            mScrollView.scrollTo(0,0);
+
             mPurchaseLink = page.getPurchaseUrl();
             mReferralLink = page.getRedirectionUrl();
-            mPageTitle.setText(page.getAppName());
+
+            mScrollView.scrollTo(0,0);
             setPurchaseButtonText();
             loadCover(page.getImageUrl());
         }
