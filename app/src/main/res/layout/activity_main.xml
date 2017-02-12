@@ -57,52 +57,68 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <ImageView
-                android:id="@+id/book_cover"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_gravity="center"
-                android:contentDescription="@string/book_cover"
-                android:scaleType="fitCenter" />
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/referral_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:text="@string/error_text"
-                app:backgroundTint="@color/colorPrimary" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@color/colorPrimary"/>
-
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/description_scroller"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:layout_marginBottom="56dp">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="56dp"
+                android:scrollbars="vertical">
 
-                <TextSwitcher
-                    android:id="@+id/book_description"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="vertical"
-                    android:padding="8dp"
-                    android:scrollbarStyle="outsideInset"
-                    android:measureAllChildren="false" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/book_cover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/book_cover"
+                        android:scaleType="fitCenter" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/referral_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:text="@string/error_text"
+                            app:backgroundTint="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:background="@color/colorPrimary"/>
+
+                    <TextSwitcher
+                        android:id="@+id/book_description"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="vertical"
+                        android:padding="8dp"
+                        android:scrollbarStyle="outsideInset"
+                        android:measureAllChildren="false" />
+
+                </LinearLayout>
+
 
             </android.support.v4.widget.NestedScrollView>
 
