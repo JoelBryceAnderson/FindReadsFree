@@ -176,7 +176,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if link is null string before attempting to open it in browser
+     * On click listener to open links.
+     * Checks if link is null before attempting to open.
+     *
+     * @param link to open in browser
+     * @return On click listener to assign to link button
      */
     public View.OnClickListener onButtonClicked(String link) {
         return view -> {
