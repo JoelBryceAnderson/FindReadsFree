@@ -145,9 +145,11 @@ public class MainActivity extends AppCompatActivity {
     private void selectPage(int page) {
         if (page == selectedPage) {
             mScrollView.smoothScrollTo(0,0);
-        } else if (mPages.get(page) != null) {
+        } else if (page < mPages.size() && mPages.get(page) != null) {
             selectedPage = page;
             showPage(mPages.get(page));
+        } else {
+            showErrorToast();
         }
     }
 
