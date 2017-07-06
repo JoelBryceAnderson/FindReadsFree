@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,7 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
     String mPurchaseLink;
     String mReferralLink;
-    
+
+    @IdRes
+    int[] mMenuIDs = new int[]{
+            R.id.action_free,
+            R.id.action_promotion,
+            R.id.action_audio_book,
+            R.id.action_serial
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
      * @param page the index of the page to select
      */
     private void selectPage(int page) {
-        if (page == mSelectedPage) {
+        if (mSelectedPage == page) {
             mScrollView.smoothScrollTo(0,0);
         } else if (page < mPages.size() && mPages.get(page) != null) {
             mSelectedPage = page;
@@ -201,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         if (pages != null && pages.size() >= 3) {
             mPages = pages;
             showPage(mPages.get(mSelectedPage));
+            selectMenuItem();
             showViews();
         }
     }
@@ -310,6 +320,12 @@ public class MainActivity extends AppCompatActivity {
                 .override(1000,1000)
                 .fitCenter()
                 .into(mBookCover);
+    }
+
+    private void selectMenuItem() {
+        mBottomNav.setOnNavigationItemSelectedListener(null);
+        mBottomNav.setSelectedItemId(mMenuIDs[mSelectedPage]);
+        mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
     }
 
     /**
