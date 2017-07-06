@@ -35,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = MainActivity.class.toString();
 
+    private static final String ACTION_FREE = "joelbryceanderson.com.findreadsfree.FREE";
+    private static final String ACTION_PROMOTION = "joelbryceanderson.com.findreadsfree.PROMOTION";
+    private static final String ACTION_AUDIOBOOK = "joelbryceanderson.com.findreadsfree.AUDIOBOOK";
+    private static final String ACTION_SERIAL = "joelbryceanderson.com.findreadsfree.SERIAL";
+
     BackendService mBackendService;
 
     List<Page> mPages;
 
-    int selectedPage = 0;
+    int mSelectedPage = 0;
 
     TextSwitcher mDescription;
     TextSwitcher mPageTitle;
@@ -53,21 +58,21 @@ public class MainActivity extends AppCompatActivity {
 
     String mPurchaseLink;
     String mReferralLink;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPageTitle = (TextSwitcher) findViewById(R.id.page_title);
-        mDescription = (TextSwitcher) findViewById(R.id.book_description);
-        mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        mBookCover = (ImageView) findViewById(R.id.book_cover);
-        mContainer = (LinearLayout) findViewById(R.id.main_container);
-        mScrollView = (NestedScrollView) findViewById(R.id.description_scroller);
-        mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mPurchaseButton = (AppCompatButton) findViewById(R.id.purchase_button);
-        mReferralButton = (AppCompatButton) findViewById(R.id.referral_button);
+        mPageTitle = findViewById(R.id.page_title);
+        mDescription = findViewById(R.id.book_description);
+        mBottomNav = findViewById(R.id.bottom_navigation);
+        mBookCover = findViewById(R.id.book_cover);
+        mContainer = findViewById(R.id.main_container);
+        mScrollView = findViewById(R.id.description_scroller);
+        mSwipeRefresh = findViewById(R.id.swipe_refresh_layout);
+        mPurchaseButton = findViewById(R.id.purchase_button);
+        mReferralButton = findViewById(R.id.referral_button);
 
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
         mPurchaseButton.setOnClickListener(onPurchaseButtonClicked());
@@ -76,9 +81,30 @@ public class MainActivity extends AppCompatActivity {
         mBackendService = ServiceFactory.createRetrofitService(
                 BackendService.class, BackendService.SERVICE_ENDPOINT);
 
+        handleShortcuts();
         initSwipeRefresh();
         initTextSwitchers();
         loadPages();
+    }
+
+    /**
+     * Handle Android 7.1 App shortcuts after pages have loaded
+     */
+    private void handleShortcuts() {
+        switch (getIntent().getAction()) {
+            case ACTION_PROMOTION:
+                mSelectedPage = 1;
+                break;
+            case ACTION_AUDIOBOOK:
+                mSelectedPage = 2;
+                break;
+            case ACTION_SERIAL:
+                mSelectedPage = 3;
+                break;
+            default:
+                mSelectedPage = 0;
+                break;
+        }
     }
 
     /**
@@ -143,10 +169,10 @@ public class MainActivity extends AppCompatActivity {
      * @param page the index of the page to select
      */
     private void selectPage(int page) {
-        if (page == selectedPage) {
+        if (page == mSelectedPage) {
             mScrollView.smoothScrollTo(0,0);
         } else if (page < mPages.size() && mPages.get(page) != null) {
-            selectedPage = page;
+            mSelectedPage = page;
             showPage(mPages.get(page));
         } else {
             showErrorToast();
@@ -174,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
     private void showData(List<Page> pages) {
         if (pages != null && pages.size() >= 3) {
             mPages = pages;
-            showPage(mPages.get(selectedPage));
+            showPage(mPages.get(mSelectedPage));
             showViews();
         }
     }
@@ -265,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
      * Changes the currently displayed text on header button to correspond with tab
      */
     private void setPurchaseButtonText() {
-        if (selectedPage == 3) {
+        if (mSelectedPage == 3) {
             mPurchaseButton.setText(getString(R.string.read_more));
         } else {
             mPurchaseButton.setText(getString(R.string.purchase));
