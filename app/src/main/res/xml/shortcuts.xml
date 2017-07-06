@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="free"
+        android:enabled="true"
+        android:icon="@drawable/ic_book"
+        android:shortcutShortLabel="@string/title_free"
+        android:shortcutLongLabel="@string/title_free"
+        android:shortcutDisabledMessage="@string/title_free">
+        <intent
+            android:action="joelbryceanderson.com.findreadsfree.FREE"
+            android:targetPackage="joelbryceanderson.com.findreadsfree"
+            android:targetClass="joelbryceanderson.com.findreadsfree.MainActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="promotion"
+        android:enabled="true"
+        android:icon="@drawable/ic_promotion"
+        android:shortcutShortLabel="@string/title_promotion"
+        android:shortcutLongLabel="@string/title_promotion"
+        android:shortcutDisabledMessage="@string/title_promotion">
+        <intent
+            android:action="joelbryceanderson.com.findreadsfree.PROMOTION"
+            android:targetPackage="joelbryceanderson.com.findreadsfree"
+            android:targetClass="joelbryceanderson.com.findreadsfree.MainActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="audibook"
+        android:enabled="true"
+        android:icon="@drawable/ic_audiobook"
+        android:shortcutShortLabel="@string/title_audiobook"
+        android:shortcutLongLabel="@string/title_audiobook"
+        android:shortcutDisabledMessage="@string/title_audiobook">
+        <intent
+            android:action="joelbryceanderson.com.findreadsfree.AUDIOBOOK"
+            android:targetPackage="joelbryceanderson.com.findreadsfree"
+            android:targetClass="joelbryceanderson.com.findreadsfree.MainActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="serial"
+        android:enabled="true"
+        android:icon="@drawable/ic_serial"
+        android:shortcutShortLabel="@string/title_serial"
+        android:shortcutLongLabel="@string/title_serial"
+        android:shortcutDisabledMessage="@string/title_serial">
+        <intent
+            android:action="joelbryceanderson.com.findreadsfree.SERIAL"
+            android:targetPackage="joelbryceanderson.com.findreadsfree"
+            android:targetClass="joelbryceanderson.com.findreadsfree.MainActivity" />
+    </shortcut>
+
+</shortcuts>
