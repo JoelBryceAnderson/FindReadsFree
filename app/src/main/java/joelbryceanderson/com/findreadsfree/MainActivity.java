@@ -29,6 +29,7 @@ import java.util.List;
 import joelbryceanderson.com.findreadsfree.models.Page;
 import joelbryceanderson.com.findreadsfree.services.BackendService;
 import joelbryceanderson.com.findreadsfree.services.ServiceFactory;
+import joelbryceanderson.com.findreadsfree.util.ViewUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         mPurchaseButton = findViewById(R.id.purchase_button);
         mReferralButton = findViewById(R.id.referral_button);
 
+        ViewUtils.removeShiftMode(mBottomNav);
         mBottomNav.setOnNavigationItemSelectedListener(onBottomNavSelected());
         mPurchaseButton.setOnClickListener(onPurchaseButtonClicked());
         mReferralButton.setOnClickListener(onReferralButtonClicked());
