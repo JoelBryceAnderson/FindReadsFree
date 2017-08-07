@@ -1,3 +1,4 @@
+//noinspection GradleDynamicVersion
 apply plugin: 'com.android.application'
 
 android {
@@ -29,9 +30,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.0.0-beta2'
-    compile 'com.android.support:design:26.0.0-beta2'
-    compile 'com.android.support:cardview-v7:26.0.0-beta2'
+    compile 'com.android.support:appcompat-v7:26.0.0'
+    compile 'com.android.support:design:26.0.0'
+    compile 'com.android.support:cardview-v7:26.0.0'
 
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.3'
